@@ -29,19 +29,22 @@ spring:
           predicates:
             - Path=/api/vet/**
           filters:
-            - StripPrefix=2
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie
         - id: visits-service
           uri: lb://visits-service
           predicates:
             - Path=/api/visit/**
           filters:
-            - StripPrefix=2
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie
         - id: customers-service
           uri: lb://customers-service
           predicates:
             - Path=/api/customer/**
           filters:
-            - StripPrefix=2
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie     
   security:
     oauth2:
       client:
@@ -50,9 +53,12 @@ spring:
             issuer-uri: http://localhost:8080/realms/spring-test
 
         registration:
-          keycloak-spring-gateway-client:
+          keycloak-gateway-neocar-client:
                provider: my-keycloak-provider
                client-id: gateway-neocar-client
                client-secret: oZXXHad9MqG62iU2JidpyOIyIIXcpcAh
                authorization-grant-type: authorization_code
-               redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+               redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/spring-test/protocol/openid-connect/certs
