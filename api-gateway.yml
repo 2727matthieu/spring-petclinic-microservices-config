@@ -44,21 +44,4 @@ spring:
             - Path=/api/customer/**
           filters:
             - TokenRelay=
-            - RemoveRequestHeader=Cookie     
-  security:
-    oauth2:
-      client:
-        provider:
-          my-keycloak-provider:
-            issuer-uri: http://localhost:8080/realms/spring-test
-
-        registration:
-          keycloak-gateway-neocar-client:
-               provider: my-keycloak-provider
-               client-id: gateway-neocar-client
-               client-secret: oZXXHad9MqG62iU2JidpyOIyIIXcpcAh
-               authorization-grant-type: authorization_code
-               redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://localhost:8080/realms/spring-test/protocol/openid-connect/certs
+            - RemoveRequestHeader=Cookie
