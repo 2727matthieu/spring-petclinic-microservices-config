@@ -24,6 +24,33 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
+            authorization-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/auth
+            user-name-attribute: preferred_username
+            user-info-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/userinfo
+            jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+            user-info-authentication-method: header
+        registration:
+          gateway-neocar-client:
+            provider: keycloak
+            client-id: gateway-neocar-client
+            client-secret: oZXXHad9MqG62iU2JidpyOIyIIXcpcAh
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
+            scope: openid
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+app:
+  config:
+    keycloak:
+      url: http://localhost:8080/auth
+      realm: spring-test
 
 # Spring Boot 1.5 makes actuator secure by default
 management.security.enabled: false
