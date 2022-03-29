@@ -8,6 +8,13 @@ spring:
       on-profile: docker
   zipkin:
     baseUrl: http://tracing-server:9411
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9191/realms/spring-test
+          jwk-set-uri: http://localhost:9191/realms/spring-test/.well-known/openid-configuration
+
 server:
   port: 8081
 eureka:
