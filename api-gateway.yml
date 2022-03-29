@@ -1,4 +1,5 @@
 server.port: 9090
+
 server:
   compression:
     enabled: true
@@ -7,6 +8,11 @@ server:
 # Internationalization
 spring.messages.basename: messages/messages
 spring:
+  cloud:
+    gateway:
+      httpclient:
+        proxy:
+          port: 9090
   config:
     activate:
       on-profile: docker
